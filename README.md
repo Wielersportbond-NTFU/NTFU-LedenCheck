@@ -7,7 +7,7 @@ The app makes a GET request to the following url: https://api.ntfu.nl/api/lidcon
 
 {membernr}: The member number to be validated. Range is 200.000 ~ 1.000.000\
 {postalcode}: A Dutch postal code. Use '0' if not available.\
-{birthdate}: A birthdate in 'dd-mm-yyyy format'. Use '0' if not available.
+{birthdate}: A birthdate in 'dd-mm-yyyy' format. Use '0' if not available.
 
 
 # Testing

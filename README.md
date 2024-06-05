@@ -8,6 +8,7 @@ The app makes a GET request to the following url: https://webservice.ntfu.nl/api
 {postalcode} A Dutch postal code. Use '0' if not available.
 {birthdate}: A birthdate in 'dd-mm-yyyy format'. Use '0' if not available.
 
+
 # Testing
 You can test with the following data.
 

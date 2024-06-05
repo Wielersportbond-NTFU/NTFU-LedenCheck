@@ -24,3 +24,9 @@ Postalcode: 4321ZY
 Membernr:   234567\
 Birthdate:  15-6-2020\
 Postalcode: 9999XX 
+
+
+# Examples
+Member number with only a postal code: https://api.ntfu.nl/api/lidcontrole/222222/1234AB/0 \
+Member number with only a birthdate: https://api.ntfu.nl/api/lidcontrole/222222/0/2-2-1902 \
+Member number with postal code and birthdate: https://api.ntfu.nl/api/lidcontrole/222222/1234AB/2-2-1902

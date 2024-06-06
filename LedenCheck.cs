@@ -17,7 +17,7 @@ namespace NtfuLedenCheck
         //het ip adres van de computer / server die de call doet moet bij de ntfu bekend zijn om door de firewall heen te komen met het request
         public static async Task<ControleResultaat> DoLedenCheck(int lidnummer, string postcode, DateTime geboortedatum)
         {
-            //controleer of de postcode niet leeg is en tussen 4 en 6 tekens lang, zo niet maak er 'na' of '0' van
+            //controleer of de postcode niet leeg is en tussen 4 en 6 tekens lang, zo niet maak er '0' van
             string pcode = "na";
             if (!string.IsNullOrEmpty(postcode))
             {
@@ -30,7 +30,7 @@ namespace NtfuLedenCheck
                 }
             }
 
-            //controleer of de geboortedatum correct is, zo niet maak er 'na' of '0' van
+            //controleer of de geboortedatum correct is, zo niet maak er '0' van
             string gbdatum = "na";
             if (geboortedatum.Year > 1900 && geboortedatum.Year <= DateTime.Now.Year)
             {

@@ -113,7 +113,7 @@
             // 
             // DisplayResult
             // 
-            DisplayResult.BackColor = System.Drawing.Color.Red;
+            DisplayResult.BackColor = System.Drawing.Color.Blue;
             DisplayResult.Location = new System.Drawing.Point(200, 110);
             DisplayResult.Name = "DisplayResult";
             DisplayResult.Size = new System.Drawing.Size(150, 100);
@@ -135,7 +135,7 @@
             Controls.Add(label1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "NTFU Leden Check";
+            Text = "NTFU LedenCheck";
             ((System.ComponentModel.ISupportInitialize)DisplayResult).EndInit();
             ResumeLayout(false);
             PerformLayout();

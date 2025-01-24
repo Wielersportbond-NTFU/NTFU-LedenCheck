@@ -3,21 +3,21 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace NtfuLedenCheck
 {
     public partial class Form1 : Form
     {
-        //wat variabelen
-        string ColorRed = "#F04540";
-        string ColorGreen = "#39C349";
-
-
         public Form1()
         {
             InitializeComponent();
 
+            //de naam van de app aanpassen in de titelbar
+            this.Text = "NTFU LedenCheck";
+
+            //verberg de resultaten picturebox
             DisplayResult.Visible = false;
         }
 
@@ -53,6 +53,7 @@ namespace NtfuLedenCheck
         private async void button1_Click(object sender, EventArgs e)
         {
             bool ErrorFound = false;
+            var VorigeKleur = DisplayResult.BackColor;
             DisplayResult.Visible = false;
             LidNummer.BackColor = Color.White;
             PostCode.BackColor = Color.White;
@@ -61,29 +62,29 @@ namespace NtfuLedenCheck
             //lidnummer verplicht
             if (string.IsNullOrEmpty(LidNummer.Text) || LidNummer.Text.Length != 6)
             {
-                LidNummer.BackColor = ColorTranslator.FromHtml(ColorRed);
+                LidNummer.BackColor = Color.Red;
                 ErrorFound = true;
             }
 
             //indien postcode dan moet tussen 4 en 6 tekens land zijn (ook belgische en duitse postcodes toestaan)
             if (!string.IsNullOrEmpty(PostCode.Text) && (PostCode.Text.Length < 4 || PostCode.Text.Length > 6))
             {
-                PostCode.BackColor = ColorTranslator.FromHtml(ColorRed);
+                PostCode.BackColor = Color.Red;
                 ErrorFound = true;
             }
 
             //indien geboortedaum dan moet lengte minimaal 8 zijn
             if (!string.IsNullOrEmpty(GeboorteDatum.Text) && GeboorteDatum.Text.Length < 8)
             {
-                GeboorteDatum.BackColor = ColorTranslator.FromHtml(ColorRed);
+                GeboorteDatum.BackColor = Color.Red;
                 ErrorFound = true;
             }
 
             //postcode of geboortedatum is verplicht
             if (string.IsNullOrEmpty(PostCode.Text) && string.IsNullOrEmpty(GeboorteDatum.Text))
             {
-                PostCode.BackColor = ColorTranslator.FromHtml(ColorRed);
-                GeboorteDatum.BackColor = ColorTranslator.FromHtml(ColorRed);
+                PostCode.BackColor = Color.Red;
+                GeboorteDatum.BackColor = Color.Red;
                 ErrorFound = true;
             }
 
@@ -91,25 +92,34 @@ namespace NtfuLedenCheck
             if (ErrorFound)
                 return;
 
-            //maak van de geboortedaum een datetime object
+            //maak van de geboortedatum een datetime object
             DateTime gbdatum = DateTime.TryParse(GeboorteDatum.Text, out gbdatum) ? gbdatum : new DateTime();
+
+            //maak van het lidnummer een integer
+            int lidnummer = int.TryParse(LidNummer.Text, out lidnummer) ? lidnummer : 0;
 
             //doe de call naar de ntfu api
             try
             {
-                var Resultaat = await LedenCheck.DoLedenCheck(Convert.ToInt32(LidNummer.Text), PostCode.Text, gbdatum);
+                var Resultaat = await LedenCheck.DoLedenCheck(lidnummer, PostCode.Text, gbdatum);
 
                 //toon het resultaat als een rood/groen vlak
                 if (Resultaat == null || !Resultaat.is_lid)
                 {
-                    DisplayResult.BackColor = ColorTranslator.FromHtml(ColorRed);
+                    DisplayResult.BackColor = Color.Red;
                 }
                 else
                 {
-                    DisplayResult.BackColor = ColorTranslator.FromHtml(ColorGreen);
+                    DisplayResult.BackColor = Color.Green;
                 }
 
-                //toon het vlak
+                //dit geeft een visuele indicatie aan het resultaat blok dat er iets gebeurd is als het resultaat bijvoorbeeld 2x achter elkaar groen is. Dit is alleen voor testen, gebruikt Thread.Sleep niet in productie.
+                if (DisplayResult.BackColor == VorigeKleur)
+                {
+                    Thread.Sleep(750);
+                }
+
+                //toon het resultaat blok
                 DisplayResult.Visible = true;
             }
             catch (Exception ex)

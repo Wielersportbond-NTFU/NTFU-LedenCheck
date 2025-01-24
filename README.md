@@ -1,8 +1,7 @@
 # NTFU-LedenCheck
  Check if someone is a member of the NTFU by validating the member number against the postal code and/or birthdate. If both are supplied then both must match.
  
- The simple WinForms app is a demo to show how this can be done. This can be implemented in your own project. See the code in "LedenCheck.cs".
- 
+ The simple WinForms app is a demo to show how this can be done. This can be implemented in your own project. See the code in "LedenCheck.cs". 
  The call to the API is done in "CallNtfuApi.cs". You can use this code to call other NTFU API endpoints as well.
 
 The app makes a GET request to the following url: https://api.ntfu.nl/api/lidcontrole/{membernr}/{postalcode}/{birthdate}

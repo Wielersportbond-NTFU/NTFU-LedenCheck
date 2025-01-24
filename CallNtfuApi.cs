@@ -26,8 +26,12 @@ namespace NtfuLedenCheck
                 //een user agent string is noodzakelijk
                 client.DefaultRequestHeaders.Add("user-agent", "NTFU LedenCheck");
 
-                //maak de request
+                //maak een GET request
                 var response = await client.GetAsync(url);
+
+                //maak een POST request
+                //var content = new StringContent(jsonstring, Encoding.UTF8, "application/json");
+                //var response = await client.PostAsync(url, content);
 
                 //het antwoord van de server was ok
                 if (response.IsSuccessStatusCode)
